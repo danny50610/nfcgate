@@ -55,7 +55,7 @@ public class Hooks implements IXposedHookLoadPackage {
             @Override
             protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
 
-                int technology = (int) param.args[0];
+                int technology = (Integer) param.args[0];
                 if (technology == 3 /* 3=TagTechnology.ISO_DEP */) {
                     param.setResult(2462);
                 }

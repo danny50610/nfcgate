@@ -1,5 +1,6 @@
 package tud.seemuh.nfcgate.gui;
 
+import android.annotation.TargetApi;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,11 +8,12 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.nfc.NfcAdapter;
-import android.nfc.NfcAdapter.ReaderCallback;
+//import android.nfc.NfcAdapter.ReaderCallback;
 import android.nfc.Tag;
 import android.nfc.tech.IsoDep;
 import android.nfc.tech.Ndef;
 import android.nfc.tech.NfcA;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
@@ -40,7 +42,7 @@ import tud.seemuh.nfcgate.util.db.CloneListItem;
 import tud.seemuh.nfcgate.util.db.CloneListStorage;
 
 public class MainActivity extends FragmentActivity
-        implements ReaderCallback,EnablenfcDialog.NFCNoticeDialogListener, WorkaroundDialog.WorkaroundDialogListener {
+        implements EnablenfcDialog.NFCNoticeDialogListener, WorkaroundDialog.WorkaroundDialogListener {
 
     private NfcAdapter mAdapter;
     private IntentFilter mIntentFilter = new IntentFilter();
@@ -74,7 +76,7 @@ public class MainActivity extends FragmentActivity
         setContentView(R.layout.activity_main);
 
         mAdapter = NfcAdapter.getDefaultAdapter(this);
-        mIntentFilter.addAction(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED);
+//        mIntentFilter.addAction(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED);
 
         if (!mAdapter.isEnabled()) {
             // NFC is not enabled -> "Tell the user to enable NFC"
@@ -134,14 +136,14 @@ public class MainActivity extends FragmentActivity
         }
 
         //ReaderMode
-        boolean isReaderModeEnabled = preferences.getBoolean(getString(R.string.pref_key_readermode), false);
-        if(isReaderModeEnabled) {
-            //This cast to ReaderCallback seems unavoidable, stupid Java...
-            mAdapter.enableReaderMode(this, this,
-                    NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
-        } else {
-            mAdapter.disableReaderMode(this);
-        }
+//        boolean isReaderModeEnabled = preferences.getBoolean(getString(R.string.pref_key_readermode), false);
+//        if(isReaderModeEnabled) {
+//            //This cast to ReaderCallback seems unavoidable, stupid Java...
+//            mAdapter.enableReaderMode(this, this,
+//                    NfcAdapter.FLAG_READER_NFC_A | NfcAdapter.FLAG_READER_SKIP_NDEF_CHECK, null);
+//        } else {
+//            mAdapter.disableReaderMode(this);
+//        }
     }
 
     public void onBackPressed() {
@@ -161,16 +163,16 @@ public class MainActivity extends FragmentActivity
         CloneFragment.getInstance().onTagDiscoveredCommon(tag);
     }
 
-    /**
-     * Function to get tag when readerMode is enabled
-     * @param tag
-     */
-    @Override
-    public void onTagDiscovered(Tag tag) {
-
-        Log.i(TAG, "Discovered tag in ReaderMode");
-        onTagDiscoveredCommon(tag);
-    }
+//    /**
+//     * Function to get tag when readerMode is enabled
+//     * @param tag
+//     */
+//    @Override
+//    public void onTagDiscovered(Tag tag) {
+//
+//        Log.i(TAG, "Discovered tag in ReaderMode");
+//        onTagDiscoveredCommon(tag);
+//    }
 
     @Override
     public void onNewIntent(Intent intent) {

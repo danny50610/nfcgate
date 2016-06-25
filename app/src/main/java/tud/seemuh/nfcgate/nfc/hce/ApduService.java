@@ -1,6 +1,5 @@
 package tud.seemuh.nfcgate.nfc.hce;
 
-import android.nfc.cardemulation.HostApduService;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -14,7 +13,7 @@ import tud.seemuh.nfcgate.util.Utils;
  * The answer is determined by the other device and the reply is passed to the ApduService by
  * the Callback class.
  */
-public class ApduService extends HostApduService {
+public class ApduService {
     private final static String TAG = "ApduService";
 
     private NfcManager mNfcManager = NfcManager.getInstance();
@@ -36,7 +35,7 @@ public class ApduService extends HostApduService {
      * @param extras not used
      * @return apdu to answer
      */
-    @Override
+    //@Override
     public byte[] processCommandApdu(byte[] apdu, Bundle extras) {
 
         Log.d(TAG, "APDU-IN: " + Utils.bytesToHex(apdu));
@@ -51,7 +50,7 @@ public class ApduService extends HostApduService {
         return DONT_RESPOND;
     }
 
-    @Override
+    //@Override
     public void onDeactivated(int reason) {
         Log.i(TAG, "Deactivated: " + reason);
         mNfcManager.unsetApduService();
@@ -59,6 +58,6 @@ public class ApduService extends HostApduService {
 
     public void sendResponse(byte[] apdu) {
         Log.d(TAG, "APDU-OUT: " + Utils.bytesToHex(apdu));
-        sendResponseApdu(apdu);
+        //sendResponseApdu(apdu);
     }
 }
